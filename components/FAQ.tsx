@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { trackEvent } from '@/lib/tracking';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { FAQSchema } from '@/components/FAQSchema';
 
 interface FAQItem {
   id: string;
@@ -26,6 +27,7 @@ export function FAQ({ items, title = 'Questions fréquentes' }: { items: FAQItem
   return (
     <section ref={ref} className={`section-padding transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       {/* SectionGoal: OBJECTION HANDLING */}
+      <FAQSchema items={items} />
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-12">
           <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">On répond à vos questions</p>

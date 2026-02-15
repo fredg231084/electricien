@@ -5,6 +5,7 @@ import { Phone, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { getPhone } from '@/lib/phone';
 import { trackEvent } from '@/lib/tracking';
+import { siteConfig } from '@/site.config';
 
 const navLinks = [
   { href: '/urgence-electricien-montreal', label: 'Urgence' },
@@ -27,12 +28,16 @@ export function Header({ isLandingPage = false }: { isLandingPage?: boolean }) {
     });
   };
 
+  const brandParts = siteConfig.business.name.split(' ');
+  const firstWord = brandParts[0] || '';
+  const restOfBrand = brandParts.slice(1).join(' ');
+
   if (isLandingPage) {
     return (
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold text-foreground">
-            Électricien <span className="text-gradient">MTL</span>
+            {firstWord} {restOfBrand && <span className="text-gradient">{restOfBrand}</span>}
           </Link>
           <a
             href={phone.tel}
@@ -51,7 +56,7 @@ export function Header({ isLandingPage = false }: { isLandingPage?: boolean }) {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-white/20 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="text-xl font-bold text-foreground">
-          Électricien <span className="text-gradient">MTL</span>
+          {firstWord} {restOfBrand && <span className="text-gradient">{restOfBrand}</span>}
         </Link>
 
         <nav className="hidden lg:flex items-center gap-6">

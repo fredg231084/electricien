@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Phone, ArrowRight, CheckCircle, MapPin } from 'lucide-react';
 import { montrealPage, global } from '@/content/pages';
 import { getPhone } from '@/lib/phone';
@@ -10,10 +11,12 @@ import { FAQ } from '@/components/FAQ';
 import { LeadForm } from '@/components/LeadForm';
 import { PlannedProjectModal } from '@/components/PlannedProjectModal';
 import { LocalBusinessSchema } from '@/components/LocalBusinessSchema';
+import { getAllNeighborhoodPages } from '@/content/neighborhoods';
 
 export function MontrealPageContent() {
   const [modalOpen, setModalOpen] = useState(false);
   const phone = getPhone(false);
+  const montrealNeighborhoods = getAllNeighborhoodPages().filter((n) => n.parentCity === 'Montréal');
 
   const openModal = () => {
     trackEvent({ eventName: 'modal_open', eventData: { modal: 'planned_project' } });
@@ -64,6 +67,27 @@ export function MontrealPageContent() {
           <div className="flex items-center gap-2 text-muted-foreground">
             <MapPin className="h-5 w-5 text-primary shrink-0" />
             <p className="text-sm">{montrealPage.arrondissements}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4">Quartiers de Montréal desservis</h2>
+          <p className="text-muted-foreground mb-6">
+            Nous intervenons dans tous les arrondissements de Montréal. Cliquez sur votre quartier pour plus d'informations :
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {montrealNeighborhoods.map((neighborhood) => (
+              <Link
+                key={neighborhood.slug}
+                href={`/electricien-${neighborhood.slug}`}
+                className="glass-card p-4 rounded-xl text-sm font-medium text-foreground hover:shadow-lg hover:border-primary/20 transition-all"
+              >
+                <MapPin className="h-4 w-4 text-primary inline mr-2" />
+                {neighborhood.name}
+              </Link>
+            ))}
           </div>
         </div>
       </section>

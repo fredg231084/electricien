@@ -5,10 +5,11 @@ import { usePathname } from 'next/navigation';
 import { persistAttribution } from '@/lib/attribution';
 import { trackEvent } from '@/lib/tracking';
 import Script from 'next/script';
+import { siteConfig } from '@/site.config';
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-const META_PIXEL = process.env.NEXT_PUBLIC_META_PIXEL;
-const TIKTOK_PIXEL = process.env.NEXT_PUBLIC_TIKTOK_PIXEL;
+const GA_ID = siteConfig.tracking.gaId || process.env.NEXT_PUBLIC_GA_ID;
+const META_PIXEL = siteConfig.tracking.metaPixel || process.env.NEXT_PUBLIC_META_PIXEL;
+const TIKTOK_PIXEL = siteConfig.tracking.tiktokPixel || process.env.NEXT_PUBLIC_TIKTOK_PIXEL;
 
 export function TrackingProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

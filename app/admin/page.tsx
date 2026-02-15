@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { BarChart3, Phone, Users, DollarSign, Search, RefreshCw } from 'lucide-react';
+import { BarChart3, Phone, Users, DollarSign, Search, RefreshCw, Download, Calendar } from 'lucide-react';
 
 interface Lead {
   id: string;
@@ -53,16 +53,21 @@ export default function AdminPage() {
   const [filters, setFilters] = useState({ status: 'all', project_type: 'all', city: 'all' });
   const [eventFilter, setEventFilter] = useState('all');
   const [loading, setLoading] = useState(false);
+  const [dateRange, setDateRange] = useState('7');
 
   const fetchStats = useCallback(async () => {
-    const res = await fetch('/api/admin/leads?mode=stats');
+    const params = new URLSearchParams();
+    params.set('mode', 'stats');
+    params.set('days', dateRange);
+    const res = await fetch(`/api/admin/leads?${params}`);
     const data = await res.json();
     setStats(data);
-  }, []);
+  }, [dateRange]);
 
   const fetchLeads = useCallback(async () => {
     setLoading(true);
     const params = new URLSearchParams();
+    params.set('days', dateRange);
     if (filters.status !== 'all') params.set('status', filters.status);
     if (filters.project_type !== 'all') params.set('project_type', filters.project_type);
     if (filters.city !== 'all') params.set('city', filters.city);
@@ -70,7 +75,7 @@ export default function AdminPage() {
     const data = await res.json();
     setLeads(data);
     setLoading(false);
-  }, [filters]);
+  }, [filters, dateRange]);
 
   const fetchEvents = useCallback(async () => {
     setLoading(true);
@@ -107,6 +112,33 @@ export default function AdminPage() {
     fetchStats();
   };
 
+  const exportToCSV = () => {
+    const headers = ['Date', 'Nom', 'Téléphone', 'Email', 'Type', 'Ville', 'Budget', 'Statut', 'Source', 'Campagne', 'Notes'];
+    const rows = leads.map((lead) => [
+      new Date(lead.created_at).toLocaleString('fr-CA'),
+      lead.name || '',
+      lead.phone || '',
+      lead.email || '',
+      lead.project_type || '',
+      lead.city || '',
+      lead.budget_range || '',
+      lead.status || '',
+      lead.source_page || '',
+      lead.utm_campaign || '',
+      (lead.notes || '').replace(/"/g, '""'),
+    ]);
+
+    const csv = [headers, ...rows]
+      .map((row) => row.map((cell) => `"${cell}"`).join(','))
+      .join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `leads-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+  };
+
   if (!authenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -134,19 +166,33 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <h1 className="text-2xl font-bold text-foreground">Tableau de bord</h1>
-          {!ADMIN_PASS && (
-            <span className="bg-amber-100 text-amber-800 text-xs font-medium px-3 py-1 rounded-full">
-              Demo mode (non protégé)
-            </span>
-          )}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 bg-white border border-border rounded-lg px-3 py-2">
+              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <select
+                value={dateRange}
+                onChange={(e) => setDateRange(e.target.value)}
+                className="text-sm font-medium bg-transparent border-none outline-none"
+              >
+                <option value="7">7 derniers jours</option>
+                <option value="30">30 derniers jours</option>
+                <option value="90">90 derniers jours</option>
+              </select>
+            </div>
+            {!ADMIN_PASS && (
+              <span className="bg-amber-100 text-amber-800 text-xs font-medium px-3 py-1 rounded-full">
+                Demo mode (non protégé)
+              </span>
+            )}
+          </div>
         </div>
 
         {stats && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <StatCard icon={Users} label="Leads (7j)" value={stats.leadsCount} />
-            <StatCard icon={Phone} label="Clics tél. (7j)" value={stats.phoneClicksCount} />
+            <StatCard icon={Users} label={`Leads (${dateRange}j)`} value={stats.leadsCount} />
+            <StatCard icon={Phone} label={`Clics tél. (${dateRange}j)`} value={stats.phoneClicksCount} />
             <StatCard
               icon={BarChart3}
               label="Par type"
@@ -181,7 +227,8 @@ export default function AdminPage() {
 
         {tab === 'leads' && (
           <>
-            <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div className="flex flex-wrap gap-3">
               <select
                 value={filters.status}
                 onChange={(e) => setFilters({ ...filters, status: e.target.value })}
@@ -215,6 +262,15 @@ export default function AdminPage() {
                 className="inline-flex items-center gap-1.5 px-3 py-2 border border-border rounded-lg text-sm bg-white hover:bg-muted transition-colors"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
+              </button>
+              </div>
+              <button
+                onClick={exportToCSV}
+                disabled={leads.length === 0}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Download className="h-4 w-4" />
+                Exporter CSV
               </button>
             </div>
 

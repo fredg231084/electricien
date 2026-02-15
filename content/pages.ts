@@ -1,6 +1,8 @@
+import { siteConfig } from '@/site.config';
+
 export const global = {
-  brand: 'Électricien MTL',
-  domain: 'electricienmtl.ca',
+  brand: siteConfig.business.name,
+  domain: siteConfig.business.domain,
   availabilityBadge: 'Intervention rapide \u2022 Estimation gratuite',
   guaranteeLine: 'Travail propre, sécuritaire, conforme au Code.',
   ctaPrimary: 'Appeler maintenant',
@@ -11,14 +13,18 @@ export const global = {
   formIntro: 'Décrivez votre besoin et on vous rappelle rapidement.',
   formConsent: "J'accepte d'être contacté à propos de ma demande.",
   sameDayLine: 'Disponibilité le jour même',
-  hours: 'Lun-Ven 7h-18h | Urgences 24/7',
-  rbqPlaceholder: 'RBQ #0000-0000-00',
+  hours: siteConfig.hours.displayText,
+  rbqPlaceholder: `${siteConfig.business.licenseLabel} #${siteConfig.business.licenseNumber}`,
 };
 
 export const home = {
   metaTitle: 'Électricien à Montréal & Laval | Service rapide 24/7 | Électricien MTL',
   metaDescription:
     "Besoin d'un électricien à Montréal ou Laval? Urgence 24/7, bornes électriques, panneaux 100A→200A, résidentiel & commercial. Estimation gratuite. Appelez maintenant.",
+  canonicalUrl: `https://${siteConfig.business.domain}/`,
+  noIndex: false,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: 'électricien Montréal',
   h1: 'Électricien à Montréal & Laval — service rapide, travail garanti',
   heroSubtext:
     'Pour une urgence, une borne électrique ou un panneau à mettre à niveau, on vous répond vite et on vous propose une solution claire.',
@@ -105,6 +111,10 @@ export const montrealPage = {
   metaTitle: 'Électricien Montréal | Urgence, panneau, borne EV | Électricien MTL',
   metaDescription:
     "Électricien à Montréal: urgence 24/7, installation de borne électrique, remplacement de panneau, travaux résidentiels et commerciaux. Estimation gratuite.",
+  canonicalUrl: `https://${siteConfig.business.domain}/electricien-montreal`,
+  noIndex: false,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: 'électricien Montréal',
   h1: 'Électricien à Montréal — rapide, sécuritaire, conforme',
   intro:
     'On intervient partout à Montréal. Notre priorité: régler le problème correctement, en respectant la sécurité et les normes.',
@@ -130,6 +140,10 @@ export const lavalPage = {
   metaTitle: 'Électricien Laval | Urgence, panneau, borne EV | Électricien MTL',
   metaDescription:
     "Électricien à Laval: urgence, bornes électriques, panneaux 100A→200A, travaux résidentiels et commerciaux. Estimation gratuite.",
+  canonicalUrl: `https://${siteConfig.business.domain}/electricien-laval`,
+  noIndex: false,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: 'électricien Laval',
   h1: 'Électricien à Laval — estimation gratuite, service rapide',
   intro:
     'On dessert toute la ville de Laval. Service rapide, estimation gratuite, travail conforme.',
@@ -155,6 +169,10 @@ export const urgencePage = {
   metaTitle: 'Urgence électricien Montréal 24/7 | Intervention rapide | Électricien MTL',
   metaDescription:
     "Urgence électricien à Montréal: panne, disjoncteur, court-circuit, odeur de brûlé. Intervention rapide et sécuritaire. Appelez maintenant.",
+  canonicalUrl: `https://${siteConfig.business.domain}/urgence-electricien-montreal`,
+  noIndex: false,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: 'urgence électricien Montréal',
   h1: 'Urgence électricien à Montréal — on priorise les situations à risque',
   warningBox:
     "Si vous sentez une odeur de brûlé, voyez des étincelles ou avez une panne dangereuse: coupez le courant (si sécuritaire) et appelez.",
@@ -183,6 +201,10 @@ export const bornePage = {
   metaTitle: 'Installation borne électrique Montréal | EV résidentiel | Électricien MTL',
   metaDescription:
     "Installation de borne électrique à Montréal: vérification de capacité, panneau, disjoncteur dédié, installation sécuritaire et conforme. Estimation gratuite.",
+  canonicalUrl: `https://${siteConfig.business.domain}/borne-electrique-montreal`,
+  noIndex: false,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: 'installation borne électrique Montréal',
   h1: 'Installation de borne électrique à Montréal — simple, conforme, sécuritaire',
   sections: [
     {
@@ -226,6 +248,10 @@ export const panneauPage = {
   metaTitle: 'Changement panneau électrique | 100A à 200A | Montréal & Laval | Électricien MTL',
   metaDescription:
     "Remplacement ou mise à niveau de panneau électrique: 100A→200A, correction de conformité, ajout de circuits. Estimation gratuite à Montréal et Laval.",
+  canonicalUrl: `https://${siteConfig.business.domain}/changement-panneau-electrique`,
+  noIndex: false,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: 'changement panneau électrique',
   h1: 'Changement de panneau électrique — sécurité, capacité, tranquillité d\u2019esprit',
   sections: [
     {
@@ -268,6 +294,10 @@ export const commercialPage = {
   metaTitle: 'Électricien commercial Montréal | Maintenance & urgences | Électricien MTL',
   metaDescription:
     "Services d'électricien commercial à Montréal: maintenance, ajout de circuits, conformité, urgences, diagnostics. Estimation gratuite.",
+  canonicalUrl: `https://${siteConfig.business.domain}/electricien-commercial-montreal`,
+  noIndex: false,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: 'électricien commercial Montréal',
   h1: 'Électricien commercial à Montréal — fiable, rapide, orienté opérations',
   sections: [
     {
@@ -303,6 +333,10 @@ export const aboutPage = {
   metaTitle: 'À propos | Électricien MTL',
   metaDescription:
     'Électricien MTL: service rapide, approche honnête, travail conforme et sécuritaire à Montréal et Laval.',
+  canonicalUrl: `https://${siteConfig.business.domain}/a-propos`,
+  noIndex: false,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: undefined,
   h1: 'Une approche simple: sécurité, transparence, travail bien fait',
   intro:
     "On mise sur une communication claire, des estimations honnêtes et un travail propre. Notre objectif: que vous soyez en confiance, du premier appel jusqu'à la fin.",
@@ -317,23 +351,39 @@ export const contactPage = {
   metaTitle: 'Contact | Électricien Montréal & Laval | Électricien MTL',
   metaDescription:
     "Contactez Électricien MTL pour une urgence, une borne électrique ou un panneau. Estimation gratuite à Montréal et Laval.",
+  canonicalUrl: `https://${siteConfig.business.domain}/contact`,
+  noIndex: false,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: undefined,
   h1: 'Contact — on vous répond rapidement',
 };
 
 export const privacyPage = {
   metaTitle: 'Politique de confidentialité | Électricien MTL',
   metaDescription: 'Politique de confidentialité de Électricien MTL.',
+  canonicalUrl: `https://${siteConfig.business.domain}/politique-de-confidentialite`,
+  noIndex: true,
+  ogImage: undefined,
+  focusKeyword: undefined,
   h1: 'Politique de confidentialité',
 };
 
 export const termsPage = {
   metaTitle: "Conditions d'utilisation | Électricien MTL",
   metaDescription: "Conditions d'utilisation du site Électricien MTL.",
+  canonicalUrl: `https://${siteConfig.business.domain}/conditions-utilisation`,
+  noIndex: true,
+  ogImage: undefined,
+  focusKeyword: undefined,
   h1: "Conditions d'utilisation",
 };
 
 export const lpUrgence = {
   metaTitle: 'Urgence électricien MTL | Intervention rapide 24/7',
+  canonicalUrl: `https://${siteConfig.business.domain}/lp/urgence-electricien-mtl`,
+  noIndex: true,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: undefined,
   h1: 'Urgence électricien — intervention rapide à Montréal',
   warningBox:
     "Panne? Odeur de brûlé? Étincelles? Coupez le courant si possible et appelez immédiatement.",
@@ -353,6 +403,10 @@ export const lpUrgence = {
 
 export const lpBorne = {
   metaTitle: 'Installation borne électrique MTL | Estimation gratuite',
+  canonicalUrl: `https://${siteConfig.business.domain}/lp/borne-electrique-mtl`,
+  noIndex: true,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: undefined,
   h1: 'Installation de borne électrique — rapide, conforme',
   bullets: [
     'Vérification de la capacité de votre panneau',
@@ -363,6 +417,10 @@ export const lpBorne = {
 
 export const lpPanneau = {
   metaTitle: 'Panneau 200A MTL | Mise à niveau 100A→200A',
+  canonicalUrl: `https://${siteConfig.business.domain}/lp/panneau-electrique-200a-mtl`,
+  noIndex: true,
+  ogImage: siteConfig.seo.defaultOgImage,
+  focusKeyword: undefined,
   h1: 'Mise à niveau de panneau 100A→200A — estimation gratuite',
   signs: [
     'Disjoncteurs qui sautent',
@@ -394,12 +452,7 @@ export const reviews = [
   },
 ];
 
-export const trustBadges = [
-  { label: 'Licencié RBQ', icon: 'shield' as const },
-  { label: 'Assuré', icon: 'check' as const },
-  { label: 'Travail garanti', icon: 'award' as const },
-  { label: 'Estimation gratuite', icon: 'calculator' as const },
-];
+export const trustBadges = siteConfig.trust.badges;
 
 export const projectTypes = [
   'Borne électrique',

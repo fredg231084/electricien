@@ -1,8 +1,10 @@
-export const MAIN_PHONE = '(514) 000-0000';
-export const MAIN_PHONE_TEL = 'tel:+15140000000';
-export const TRACKING_PHONE = '(514) 111-1111';
-export const TRACKING_PHONE_TEL = 'tel:+15141111111';
-export const EMAIL = 'leads@electricienmtl.ca';
+import { siteConfig } from '@/site.config';
+
+export const MAIN_PHONE = siteConfig.contact.phone.main.display;
+export const MAIN_PHONE_TEL = siteConfig.contact.phone.main.tel;
+export const TRACKING_PHONE = siteConfig.contact.phone.tracking.display;
+export const TRACKING_PHONE_TEL = siteConfig.contact.phone.tracking.tel;
+export const EMAIL = siteConfig.contact.email;
 
 export function getPhone(isLandingPage: boolean) {
   return isLandingPage

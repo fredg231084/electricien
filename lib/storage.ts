@@ -63,11 +63,15 @@ export async function saveEvent(event: TrackingEvent): Promise<boolean> {
 export async function listLeads(
   limit = 50,
   offset = 0,
-  filters?: Record<string, string>
+  filters?: Record<string, string>,
+  days = 7
 ) {
+  const dateThreshold = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+
   let query = supabase
     .from('leads')
     .select('*')
+    .gte('created_at', dateThreshold)
     .order('created_at', { ascending: false })
     .range(offset, offset + limit - 1);
 
@@ -123,19 +127,19 @@ export async function updateLeadStatus(
   return true;
 }
 
-export async function getLeadStats() {
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+export async function getLeadStats(days = 7) {
+  const dateThreshold = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
 
   const { data: recentLeads } = await supabase
     .from('leads')
     .select('id, project_type, budget_range')
-    .gte('created_at', sevenDaysAgo);
+    .gte('created_at', dateThreshold);
 
   const { data: phoneClicks } = await supabase
     .from('events')
     .select('id')
     .eq('event_name', 'phone_click')
-    .gte('created_at', sevenDaysAgo);
+    .gte('created_at', dateThreshold);
 
   return {
     leadsCount: recentLeads?.length || 0,

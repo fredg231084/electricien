@@ -1,43 +1,61 @@
 import { getPhone } from '@/lib/phone';
+import { siteConfig } from '@/site.config';
 
-export function LocalBusinessSchema({ isLandingPage = false }: { isLandingPage?: boolean }) {
+interface LocalBusinessSchemaProps {
+  isLandingPage?: boolean;
+  geoCoordinates?: { lat: number; lng: number };
+  areaServed?: string;
+}
+
+export function LocalBusinessSchema({ isLandingPage = false, geoCoordinates, areaServed }: LocalBusinessSchemaProps) {
   const phone = getPhone(isLandingPage);
 
-  const schema = {
+  const schemaBase: any = {
     '@context': 'https://schema.org',
-    '@type': 'Electrician',
-    name: 'Électricien MTL',
-    url: 'https://electricienmtl.ca',
+    '@type': siteConfig.business.type,
+    name: siteConfig.business.name,
+    url: `https://${siteConfig.business.domain}`,
     telephone: phone.display,
-    email: 'leads@electricienmtl.ca',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: '123 rue Exemple',
-      addressLocality: 'Montréal',
-      addressRegion: 'QC',
-      postalCode: 'H2X 1Y1',
-      addressCountry: 'CA',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 45.5017,
-      longitude: -73.5673,
-    },
-    areaServed: [
-      { '@type': 'City', name: 'Montréal' },
-      { '@type': 'City', name: 'Laval' },
-    ],
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        opens: '07:00',
-        closes: '18:00',
-      },
-    ],
+    email: siteConfig.contact.email,
+    areaServed: areaServed
+      ? [{ '@type': 'Neighborhood', name: areaServed }]
+      : [
+          { '@type': 'City', name: siteConfig.areas.primaryCity },
+          { '@type': 'City', name: siteConfig.areas.secondaryCity },
+        ],
+    openingHoursSpecification: siteConfig.hours.businessHours.map((day) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: day.day,
+      opens: day.open,
+      closes: day.close,
+    })),
     priceRange: '$$',
-    sameAs: [],
+    sameAs: Object.values(siteConfig.social).filter(Boolean),
   };
+
+  if (geoCoordinates) {
+    schemaBase.geo = {
+      '@type': 'GeoCoordinates',
+      latitude: geoCoordinates.lat,
+      longitude: geoCoordinates.lng,
+    };
+  } else if (siteConfig.contact.hasPhysicalLocation) {
+    schemaBase.address = {
+      '@type': 'PostalAddress',
+      streetAddress: siteConfig.contact.address.street,
+      addressLocality: siteConfig.contact.address.city,
+      addressRegion: siteConfig.contact.address.region,
+      postalCode: siteConfig.contact.address.postalCode,
+      addressCountry: siteConfig.contact.address.country,
+    };
+    schemaBase.geo = {
+      '@type': 'GeoCoordinates',
+      latitude: siteConfig.contact.address.lat,
+      longitude: siteConfig.contact.address.lng,
+    };
+  }
+
+  const schema = schemaBase;
 
   return (
     <script

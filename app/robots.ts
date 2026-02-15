@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/lp/', '/admin'],
+      disallow: ['/lp/', '/admin', '/api/'],
     },
     sitemap: 'https://electricienmtl.ca/sitemap.xml',
   };

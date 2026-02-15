@@ -4,9 +4,10 @@ import { listLeads, getLeadStats } from '@/lib/storage';
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const mode = searchParams.get('mode');
+  const days = parseInt(searchParams.get('days') || '7', 10);
 
   if (mode === 'stats') {
-    const stats = await getLeadStats();
+    const stats = await getLeadStats(days);
     return NextResponse.json(stats);
   }
 
@@ -21,6 +22,6 @@ export async function GET(request: Request) {
   if (city) filters.city = city;
   if (utm_campaign) filters.utm_campaign = utm_campaign;
 
-  const leads = await listLeads(50, 0, filters);
+  const leads = await listLeads(50, 0, filters, days);
   return NextResponse.json(leads);
 }
