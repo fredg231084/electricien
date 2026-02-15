@@ -8,14 +8,23 @@ import { UrgentCallModule } from '@/components/UrgentCallModule';
 import { FAQ } from '@/components/FAQ';
 import { LeadForm } from '@/components/LeadForm';
 import { LocalBusinessSchema } from '@/components/LocalBusinessSchema';
+import { BreadcrumbSchema } from '@/components/BreadcrumbSchema';
+import { ServiceSchema } from '@/components/ServiceSchema';
 import { TrustBadges } from '@/components/TrustBadges';
 
 export function UrgencePageContent() {
   const phone = getPhone(false);
 
+  const breadcrumbItems = [
+    { name: 'Accueil', url: '/' },
+    { name: 'Urgence électrique', url: '/urgence-electricien-montreal' },
+  ];
+
   return (
     <>
       <LocalBusinessSchema />
+      <BreadcrumbSchema items={breadcrumbItems} />
+      <ServiceSchema name="Urgence électrique" description={urgencePage.metaDescription} />
 
       <section className="py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-4">

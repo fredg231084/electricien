@@ -1,0 +1,1 @@
+Replace this with a 1200x630px image featuring your business name and logo. Use Canva or similar tool. Name it default.jpg.

@@ -156,3 +156,65 @@ export async function getLeadStats(days = 7) {
     }, {}),
   };
 }
+
+export async function getEventStats(days = 7) {
+  const dateThreshold = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+
+  const { data: pageViews } = await supabase
+    .from('events')
+    .select('id')
+    .eq('event_name', 'page_view')
+    .gte('created_at', dateThreshold);
+
+  const { data: phoneClicks } = await supabase
+    .from('events')
+    .select('id')
+    .eq('event_name', 'phone_click')
+    .gte('created_at', dateThreshold);
+
+  const { data: leadSubmits } = await supabase
+    .from('events')
+    .select('id')
+    .eq('event_name', 'lead_submit')
+    .gte('created_at', dateThreshold);
+
+  const { data: leadSuccesses } = await supabase
+    .from('events')
+    .select('id')
+    .eq('event_name', 'lead_success')
+    .gte('created_at', dateThreshold);
+
+  return {
+    pageViews: pageViews?.length || 0,
+    phoneClicks: phoneClicks?.length || 0,
+    leadSubmits: leadSubmits?.length || 0,
+    leadSuccesses: leadSuccesses?.length || 0,
+  };
+}
+
+export async function getTopPages(days = 7) {
+  const dateThreshold = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+
+  const { data: events } = await supabase
+    .from('events')
+    .select('page_path, event_name')
+    .in('event_name', ['page_view', 'phone_click', 'lead_success'])
+    .gte('created_at', dateThreshold);
+
+  const pageStats: Record<string, { views: number; phone_clicks: number; lead_successes: number }> = {};
+
+  (events || []).forEach((event) => {
+    if (!pageStats[event.page_path]) {
+      pageStats[event.page_path] = { views: 0, phone_clicks: 0, lead_successes: 0 };
+    }
+
+    if (event.event_name === 'page_view') pageStats[event.page_path].views++;
+    if (event.event_name === 'phone_click') pageStats[event.page_path].phone_clicks++;
+    if (event.event_name === 'lead_success') pageStats[event.page_path].lead_successes++;
+  });
+
+  return Object.entries(pageStats)
+    .map(([page_path, stats]) => ({ page_path, ...stats }))
+    .sort((a, b) => b.views - a.views)
+    .slice(0, 10);
+}

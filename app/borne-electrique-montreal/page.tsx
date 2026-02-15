@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
+import { generateMetadata as genMeta } from '@/lib/seo';
 import { bornePage } from '@/content/pages';
 import { BornePageContent } from './content';
 
-export const metadata: Metadata = {
-  title: bornePage.metaTitle,
-  description: bornePage.metaDescription,
-};
+export const metadata = genMeta({
+  metaTitle: bornePage.metaTitle,
+  metaDescription: bornePage.metaDescription,
+  path: '/borne-electrique-montreal',
+});
 
 export default function BorneElectriqueMontreal() {
   return <BornePageContent />;

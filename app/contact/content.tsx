@@ -5,10 +5,18 @@ import { contactPage, global } from '@/content/pages';
 import { MAIN_PHONE, MAIN_PHONE_TEL, EMAIL } from '@/lib/phone';
 import { trackEvent } from '@/lib/tracking';
 import { LeadForm } from '@/components/LeadForm';
+import { BreadcrumbSchema } from '@/components/BreadcrumbSchema';
 
 export function ContactPageContent() {
+  const breadcrumbItems = [
+    { name: 'Accueil', url: '/' },
+    { name: 'Contact', url: '/contact' },
+  ];
+
   return (
-    <section className="py-16 sm:py-20">
+    <>
+      <BreadcrumbSchema items={breadcrumbItems} />
+      <section className="py-16 sm:py-20">
       <div className="max-w-5xl mx-auto px-4">
         <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-10">{contactPage.h1}</h1>
 
@@ -59,5 +67,6 @@ export function ContactPageContent() {
         </div>
       </div>
     </section>
+    </>
   );
 }

@@ -11,12 +11,18 @@ import { FAQ } from '@/components/FAQ';
 import { LeadForm } from '@/components/LeadForm';
 import { PlannedProjectModal } from '@/components/PlannedProjectModal';
 import { LocalBusinessSchema } from '@/components/LocalBusinessSchema';
+import { BreadcrumbSchema } from '@/components/BreadcrumbSchema';
 import { getAllNeighborhoodPages } from '@/content/neighborhoods';
 
 export function MontrealPageContent() {
   const [modalOpen, setModalOpen] = useState(false);
   const phone = getPhone(false);
   const montrealNeighborhoods = getAllNeighborhoodPages().filter((n) => n.parentCity === 'Montréal');
+
+  const breadcrumbItems = [
+    { name: 'Accueil', url: '/' },
+    { name: 'Montréal', url: '/electricien-montreal' },
+  ];
 
   const openModal = () => {
     trackEvent({ eventName: 'modal_open', eventData: { modal: 'planned_project' } });
@@ -26,6 +32,7 @@ export function MontrealPageContent() {
   return (
     <>
       <LocalBusinessSchema />
+      <BreadcrumbSchema items={breadcrumbItems} />
 
       <section className="py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-4">

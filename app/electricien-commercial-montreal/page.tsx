@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
+import { generateMetadata as genMeta } from '@/lib/seo';
 import { commercialPage } from '@/content/pages';
 import { CommercialPageContent } from './content';
 
-export const metadata: Metadata = {
-  title: commercialPage.metaTitle,
-  description: commercialPage.metaDescription,
-};
+export const metadata = genMeta({
+  metaTitle: commercialPage.metaTitle,
+  metaDescription: commercialPage.metaDescription,
+  path: '/electricien-commercial-montreal',
+});
 
 export default function ElectricienCommercialMontreal() {
   return <CommercialPageContent />;

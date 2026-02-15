@@ -1,10 +1,11 @@
-import type { Metadata } from 'next';
+import { generateMetadata as genMeta } from '@/lib/seo';
 import { termsPage } from '@/content/pages';
 
-export const metadata: Metadata = {
-  title: termsPage.metaTitle,
-  description: termsPage.metaDescription,
-};
+export const metadata = genMeta({
+  metaTitle: termsPage.metaTitle,
+  metaDescription: termsPage.metaDescription,
+  path: '/conditions-utilisation',
+});
 
 export default function ConditionsUtilisation() {
   return (

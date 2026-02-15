@@ -33,6 +33,10 @@ export default function RootLayout({
   return (
     <html lang={siteConfig.seo.language}>
       <head>
+        <link rel="alternate" hrefLang="fr-CA" href={`https://${siteConfig.business.domain}`} />
+        {siteConfig.seo.googleSiteVerification && (
+          <meta name="google-site-verification" content={siteConfig.seo.googleSiteVerification} />
+        )}
         <HeadInjection />
         {gtmId && (
           <script

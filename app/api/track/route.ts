@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server';
 import { saveEvent } from '@/lib/storage';
+import { rateLimit } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
+  const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+
+  if (!rateLimit(ip, 100, 60000)) {
+    return NextResponse.json({ ok: false, error: 'Too many requests' }, { status: 429 });
+  }
+
   try {
     const body = await request.json();
 

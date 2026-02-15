@@ -5,12 +5,19 @@ import { aboutPage, global } from '@/content/pages';
 import { getPhone } from '@/lib/phone';
 import { trackEvent } from '@/lib/tracking';
 import { TrustBadges } from '@/components/TrustBadges';
+import { BreadcrumbSchema } from '@/components/BreadcrumbSchema';
 
 export function AboutPageContent() {
   const phone = getPhone(false);
 
+  const breadcrumbItems = [
+    { name: 'Accueil', url: '/' },
+    { name: 'À propos', url: '/a-propos' },
+  ];
+
   return (
     <>
+      <BreadcrumbSchema items={breadcrumbItems} />
       <section className="py-16 sm:py-20">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">{aboutPage.h1}</h1>

@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
+import { generateMetadata as genMeta } from '@/lib/seo';
 import { lavalPage } from '@/content/pages';
 import { LavalPageContent } from './content';
 
-export const metadata: Metadata = {
-  title: lavalPage.metaTitle,
-  description: lavalPage.metaDescription,
-};
+export const metadata = genMeta({
+  metaTitle: lavalPage.metaTitle,
+  metaDescription: lavalPage.metaDescription,
+  path: '/electricien-laval',
+});
 
 export default function ElectricienLaval() {
   return <LavalPageContent />;

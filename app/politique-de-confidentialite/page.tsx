@@ -1,10 +1,11 @@
-import type { Metadata } from 'next';
+import { generateMetadata as genMeta } from '@/lib/seo';
 import { privacyPage } from '@/content/pages';
 
-export const metadata: Metadata = {
-  title: privacyPage.metaTitle,
-  description: privacyPage.metaDescription,
-};
+export const metadata = genMeta({
+  metaTitle: privacyPage.metaTitle,
+  metaDescription: privacyPage.metaDescription,
+  path: '/politique-de-confidentialite',
+});
 
 export default function PolitiqueDeConfidentialite() {
   return (
