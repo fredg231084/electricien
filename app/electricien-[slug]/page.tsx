@@ -12,10 +12,13 @@ import { TrustBadges } from '@/components/TrustBadges';
 import { Reviews } from '@/components/Reviews';
 import { CTAStrip } from '@/components/CTAStrip';
 
+
+
 export async function generateStaticParams() {
-  const neighborhoods = getAllNeighborhoodPages();
-  return neighborhoods.map((n) => ({
-    slug: n.slug,
+  // FIXED: Access siteConfig directly for slugs only (build-time optimization)
+  // getAllNeighborhoodPages() is still used elsewhere for full page content
+  return siteConfig.areas.neighborhoods.map((neighborhood) => ({
+    slug: neighborhood.slug,
   }));
 }
 
