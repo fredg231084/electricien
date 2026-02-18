@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { updateLeadStatus, saveEvent } from '@/lib/storage';
 
- export async function PATCH(
+export async function PATCH(
   request: Request,
-  props: { params: Promise<{ id: string }> }  // ← Change to "props" here
+  props: { params: Promise<{ id: string }> }
 ) {
-  const params = await props.params; // ← Now props exists!
+  const params = await props.params;
   try {
     const body = await request.json();
     const { status, notes, job_value } = body;
