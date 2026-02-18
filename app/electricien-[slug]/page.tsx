@@ -22,42 +22,24 @@ import { CTAStrip } from '@/components/CTAStrip';
  // }));
 // }
 
+
 export async function generateStaticParams() {
   console.log('=== generateStaticParams DEBUG ===');
-  console.log('1. siteConfig exists:', !!siteConfig);
-  console.log('2. siteConfig.areas exists:', !!siteConfig?.areas);
-  console.log('3. neighborhoods exists:', !!siteConfig?.areas?.neighborhoods);
-  console.log('4. neighborhoods length:', siteConfig?.areas?.neighborhoods?.length);
-  console.log('5. neighborhoods array:', JSON.stringify(siteConfig?.areas?.neighborhoods));
-  
-  // If empty or undefined, use fallback
-  if (!siteConfig?.areas?.neighborhoods || siteConfig.areas.neighborhoods.length === 0) {
-    console.error('⚠️ WARNING: neighborhoods array is empty! Using hardcoded fallback.');
-    return [
-      { slug: 'rosemont' },
-      { slug: 'plateau-mont-royal' },
-      { slug: 'villeray' },
-      { slug: 'verdun' },
-      { slug: 'ahuntsic' },
-      { slug: 'ndg' },
-      { slug: 'hochelaga' },
-      { slug: 'lasalle' },
-      { slug: 'mercier' },
-      { slug: 'chomedey' },
-      { slug: 'laval-des-rapides' },
-      { slug: 'sainte-dorothee' },
-    ];
-  }
+  console.log('neighborhoods:', siteConfig.areas.neighborhoods.map(n => n.slug));
   
   const result = siteConfig.areas.neighborhoods.map((neighborhood) => ({
     slug: neighborhood.slug,
   }));
   
-  console.log('6. Generated result:', JSON.stringify(result));
+  console.log('Generated slugs:', result.map(r => r.slug));
+  console.log('Total pages to generate:', result.length);
   console.log('=== END DEBUG ===');
   
   return result;
 }
+
+
+
 
 
 
