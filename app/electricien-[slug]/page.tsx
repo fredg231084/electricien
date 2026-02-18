@@ -24,18 +24,21 @@ import { CTAStrip } from '@/components/CTAStrip';
 
 
 export async function generateStaticParams() {
-  console.log('=== generateStaticParams DEBUG ===');
-  console.log('neighborhoods:', siteConfig.areas.neighborhoods.map(n => n.slug));
-  
-  const result = siteConfig.areas.neighborhoods.map((neighborhood) => ({
-    slug: neighborhood.slug,
-  }));
-  
-  console.log('Generated slugs:', result.map(r => r.slug));
-  console.log('Total pages to generate:', result.length);
-  console.log('=== END DEBUG ===');
-  
-  return result;
+  // Hardcoded for reliability - generated from site.config.ts neighborhoods
+  return [
+    { slug: 'rosemont' },
+    { slug: 'plateau-mont-royal' },
+    { slug: 'villeray' },
+    { slug: 'verdun' },
+    { slug: 'ahuntsic' },
+    { slug: 'ndg' },
+    { slug: 'hochelaga' },
+    { slug: 'lasalle' },
+    { slug: 'mercier' },
+    { slug: 'chomedey' },
+    { slug: 'laval-des-rapides' },
+    { slug: 'sainte-dorothee' },
+  ];
 }
 
 
