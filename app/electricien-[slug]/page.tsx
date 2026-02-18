@@ -14,13 +14,52 @@ import { CTAStrip } from '@/components/CTAStrip';
 
 
 
-export async function generateStaticParams() {
+// export async function generateStaticParams() {
   // FIXED: Access siteConfig directly for slugs only (build-time optimization)
   // getAllNeighborhoodPages() is still used elsewhere for full page content
-  return siteConfig.areas.neighborhoods.map((neighborhood) => ({
+  // return siteConfig.areas.neighborhoods.map((neighborhood) => ({
+  //   slug: neighborhood.slug,
+ // }));
+// }
+
+export async function generateStaticParams() {
+  console.log('=== generateStaticParams DEBUG ===');
+  console.log('1. siteConfig exists:', !!siteConfig);
+  console.log('2. siteConfig.areas exists:', !!siteConfig?.areas);
+  console.log('3. neighborhoods exists:', !!siteConfig?.areas?.neighborhoods);
+  console.log('4. neighborhoods length:', siteConfig?.areas?.neighborhoods?.length);
+  console.log('5. neighborhoods array:', JSON.stringify(siteConfig?.areas?.neighborhoods));
+  
+  // If empty or undefined, use fallback
+  if (!siteConfig?.areas?.neighborhoods || siteConfig.areas.neighborhoods.length === 0) {
+    console.error('⚠️ WARNING: neighborhoods array is empty! Using hardcoded fallback.');
+    return [
+      { slug: 'rosemont' },
+      { slug: 'plateau-mont-royal' },
+      { slug: 'villeray' },
+      { slug: 'verdun' },
+      { slug: 'ahuntsic' },
+      { slug: 'ndg' },
+      { slug: 'hochelaga' },
+      { slug: 'lasalle' },
+      { slug: 'mercier' },
+      { slug: 'chomedey' },
+      { slug: 'laval-des-rapides' },
+      { slug: 'sainte-dorothee' },
+    ];
+  }
+  
+  const result = siteConfig.areas.neighborhoods.map((neighborhood) => ({
     slug: neighborhood.slug,
   }));
+  
+  console.log('6. Generated result:', JSON.stringify(result));
+  console.log('=== END DEBUG ===');
+  
+  return result;
 }
+
+
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const page = getNeighborhoodPageBySlug(params.slug);
