@@ -3,7 +3,7 @@ export const siteConfig = {
     name: 'Électricien MTL',
     legalName: 'Électricien MTL Inc.',
     tagline: 'Service rapide, travail garanti',
-    domain: 'electricienmtl.ca',
+    domain: 'www.electricienmtl.ca',
     type: 'Electrician',
     licenseLabel: 'RBQ',
     licenseNumber: '5862-4677-01',
