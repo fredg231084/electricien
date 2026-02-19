@@ -22,24 +22,26 @@ import { CTAStrip } from '@/components/CTAStrip';
  // }));
 // }
 
-
 export async function generateStaticParams() {
-  // Hardcoded for reliability - generated from site.config.ts neighborhoods
   return [
-    { slug: 'rosemont' },
-    { slug: 'plateau-mont-royal' },
-    { slug: 'villeray' },
-    { slug: 'verdun' },
-    { slug: 'ahuntsic' },
-    { slug: 'ndg' },
-    { slug: 'hochelaga' },
-    { slug: 'lasalle' },
-    { slug: 'mercier' },
-    { slug: 'chomedey' },
-    { slug: 'laval-des-rapides' },
-    { slug: 'sainte-dorothee' },
+    { slug: 'electricien-rosemont' },                // FULL slug
+    { slug: 'electricien-plateau-mont-royal' },      // FULL slug
+    { slug: 'electricien-villeray' },                // FULL slug
+    { slug: 'electricien-verdun' },
+    { slug: 'electricien-ahuntsic' },
+    { slug: 'electricien-ndg' },
+    { slug: 'electricien-hochelaga' },
+    { slug: 'electricien-lasalle' },
+    { slug: 'electricien-mercier' },
+    { slug: 'electricien-chomedey' },
+    { slug: 'electricien-laval-des-rapides' },
+    { slug: 'electricien-sainte-dorothee' },
   ];
 }
+
+
+
+
 
 
 
