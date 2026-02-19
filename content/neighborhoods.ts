@@ -140,7 +140,10 @@ export function getAllNeighborhoodPages(): NeighborhoodPage[] {
 }
 
 export function getNeighborhoodPageBySlug(slug: string): NeighborhoodPage | undefined {
-  const neighborhood = siteConfig.areas.neighborhoods.find((n) => n.slug === slug);
+  // Remove 'electricien-' prefix to match against config
+  const actualSlug = slug.replace('electricien-', '');
+  const neighborhood = siteConfig.areas.neighborhoods.find((n) => n.slug === actualSlug);
   if (!neighborhood) return undefined;
   return generateNeighborhoodPage(neighborhood);
 }
+
